@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="Cielo">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mis Herramientas Web - Suite Profesional</title>
+  <link rel="icon" href="./vite.svg" type="image/x-icon">
+  <meta name="description" content="Suite profesional con 3 herramientas: Parser de tablas PDF, OCR de imágenes y Conversor PDF a Excel">
+  
+  <!-- CDNs -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@4.0.379/build/pdf.min.mjs" type="module"></script>
+<script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@4.0.379/build/pdf.worker.min.mjs" type="module"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+<!-- ========== HEADER 6vh ========== -->
+<header class="hd">
+  <div class="hd_cont">
+    <div class="hd_izq">
+      <h1>
+        <i class="fas fa-toolbox"></i>
+        Mis Herramientas Web
+      </h1>
+    </div>
+    
+    <div class="hd_der">
+      <div class="hd_temas"></div>
+      
+      <div class="hd_moti">
+        <i class="fas fa-lightbulb"></i>
+        <span>¡Construyendo el futuro!</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ========== MAIN CONTAINER 85vw ========== -->
+<main class="mn">
+
+  <!-- ========== HERRAMIENTA 1: TABLA PARSER (92vh) ========== -->
+  <section class="hr hr_tabla" id="hr1">
+    <div class="hr_hd">
+      <div class="hr_tit">
+        <i class="fas fa-table"></i>
+        <h2>Parser de Tablas PDF</h2>
+      </div>
+      <p class="hr_desc">Copia texto de PDF y conviértelo en tabla estructurada para Excel</p>
+    </div>
+    
+    <div class="hr_body">
+      <!-- Entrada -->
+      <div class="hr_col hr_entrada">
+        <div class="col_hd">
+          <h3><i class="fas fa-file-import"></i> Entrada</h3>
+          <button class="btn btn_limpiar" data-target="tb_entrada">
+            <i class="fas fa-eraser"></i> Limpiar
+          </button>
+        </div>
+        <textarea 
+          id="tb_entrada" 
+          class="txt_area" 
+          placeholder="Pega aquí el texto del PDF con tabulaciones...&#10;&#10;Ejemplo:&#10;Producto    Cantidad    Precio&#10;Laptop      2           1500&#10;Mouse       5           25"
+        ></textarea>
+        <div class="col_info">
+          <span class="info_item"><i class="fas fa-align-left"></i> <span id="tb_lineas">0</span> líneas</span>
+          <span class="info_item"><i class="fas fa-font"></i> <span id="tb_chars">0</span> caracteres</span>
+        </div>
+      </div>
+      
+      <!-- Resultado -->
+      <div class="hr_col hr_resultado">
+        <div class="col_hd">
+          <h3><i class="fas fa-table-cells"></i> Resultado</h3>
+          <button class="btn btn_copiar" data-target="tb_resultado">
+            <i class="fas fa-copy"></i> Copiar tabla
+          </button>
+        </div>
+        <div id="tb_resultado" class="resultado_tabla">
+          <div class="placeholder">
+            <i class="fas fa-table"></i>
+            <p>La tabla aparecerá aquí</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== HERRAMIENTA 2: OCR IMÁGENES (92vh) ========== -->
+  <section class="hr hr_ocr" id="hr2">
+    <div class="hr_hd">
+      <div class="hr_tit">
+        <i class="fas fa-image"></i>
+        <h2>Reconocimiento de Texto (OCR)</h2>
+      </div>
+      <p class="hr_desc">Extrae texto de imágenes con precisión profesional</p>
+    </div>
+    
+    <div class="hr_body">
+      <!-- Entrada Imagen -->
+      <div class="hr_col hr_entrada">
+        <div class="col_hd">
+          <h3><i class="fas fa-file-image"></i> Imagen</h3>
+          <div class="btn_group">
+            <button class="btn btn_cargar" id="ocr_cargar">
+              <i class="fas fa-upload"></i> Cargar
+            </button>
+            <button class="btn btn_limpiar" id="ocr_limpiar">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+          <input type="file" id="ocr_file" accept="image/*" style="display:none">
+        </div>
+        
+        <div id="ocr_zona" class="zona_drop">
+          <div class="drop_content">
+            <i class="fas fa-cloud-arrow-up"></i>
+            <p>Arrastra una imagen aquí</p>
+            <p class="drop_sub">o pega con <kbd>Ctrl</kbd> + <kbd>V</kbd></p>
+            <button class="btn btn_primary" id="ocr_seleccionar">
+              <i class="fas fa-folder-open"></i> Seleccionar archivo
+            </button>
+          </div>
+          <div id="ocr_preview" class="img_preview"></div>
+          <div class="ocr_progress">
+            <div class="progress_bar">
+              <div class="progress_fill"></div>
+            </div>
+            <span class="progress_text">0%</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Resultado Texto -->
+      <div class="hr_col hr_resultado">
+        <div class="col_hd">
+          <h3><i class="fas fa-file-alt"></i> Texto Extraído</h3>
+          <div class="btn_group">
+            <button class="btn btn_copiar" data-target="ocr_resultado">
+              <i class="fas fa-copy"></i> Copiar
+            </button>
+            <button class="btn btn_descargar" id="ocr_descargar">
+              <i class="fas fa-download"></i> Descargar
+            </button>
+          </div>
+        </div>
+        <textarea 
+          id="ocr_resultado" 
+          class="txt_area" 
+          placeholder="El texto extraído aparecerá aquí..."
+          readonly
+        ></textarea>
+        <div class="col_info">
+          <span class="info_item"><i class="fas fa-language"></i> Español/Inglés</span>
+          <span class="info_item"><i class="fas fa-clock"></i> <span id="ocr_tiempo">--</span></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== HERRAMIENTA 3: PDF → EXCEL (92vh) ========== -->
+  <section class="hr hr_pdf" id="hr3">
+    <div class="hr_hd">
+      <div class="hr_tit">
+        <i class="fas fa-file-excel"></i>
+        <h2>Conversor PDF a Excel</h2>
+      </div>
+      <p class="hr_desc">Convierte tablas de PDF a formato Excel automáticamente</p>
+    </div>
+    
+    <div class="hr_body">
+      <!-- Entrada PDF -->
+      <div class="hr_col hr_entrada">
+        <div class="col_hd">
+          <h3><i class="fas fa-file-pdf"></i> Archivo PDF</h3>
+          <button class="btn btn_limpiar" id="pdf_limpiar">
+            <i class="fas fa-times"></i> Cancelar
+          </button>
+        </div>
+        
+        <div id="pdf_zona" class="zona_drop">
+          <div class="drop_content">
+            <i class="fas fa-file-pdf"></i>
+            <p>Arrastra un archivo PDF aquí</p>
+            <p class="drop_sub">Máximo 10 MB</p>
+            <button class="btn btn_primary" id="pdf_seleccionar">
+              <i class="fas fa-folder-open"></i> Seleccionar PDF
+            </button>
+          </div>
+          <input type="file" id="pdf_file" accept=".pdf" style="display:none">
+          
+          <div id="pdf_info" class="file_info">
+            <div class="file_icon">
+              <i class="fas fa-file-pdf"></i>
+            </div>
+            <div class="file_details">
+              <span class="file_name">--</span>
+              <span class="file_size">--</span>
+              <span class="file_pages">--</span>
+            </div>
+          </div>
+        </div>
+        
+        <button class="btn btn_primary btn_procesar" id="pdf_procesar">
+          <i class="fas fa-cog"></i> Procesar PDF
+        </button>
+      </div>
+      
+      <!-- Resultado Excel -->
+      <div class="hr_col hr_resultado">
+        <div class="col_hd">
+          <h3><i class="fas fa-file-excel"></i> Resultado</h3>
+          <button class="btn btn_descargar" id="pdf_descargar" disabled>
+            <i class="fas fa-download"></i> Descargar Excel
+          </button>
+        </div>
+        
+        <div class="pdf_progress">
+          <div class="progress_circle">
+            <svg viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="45" class="progress_bg"></circle>
+              <circle cx="50" cy="50" r="45" class="progress_ring"></circle>
+            </svg>
+            <div class="progress_percent">0%</div>
+          </div>
+          <p class="progress_status">Esperando archivo...</p>
+        </div>
+        
+        <div id="pdf_preview" class="excel_preview">
+          <div class="preview_tabs">
+            <button class="tab_btn active" data-tab="hoja1">Hoja 1</button>
+          </div>
+          <div class="preview_content"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!--FOOTER-->
+<footer class='foo hwb txc'>
+<p>Creado con<i class='wicon wi-corazon'></i>by<a class='ftx lkme' href='https://wtaype.github.io/' target='_blank'>@wilder.taype</a>2025 - <span class='wty'></span><span class='abw tm11042025' id='101542394703517594'>| Acerca del app | Actualizado</span><span class='wtu'></span></p>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="./main.js"></script>
+</body>
+</html>

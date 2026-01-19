@@ -289,7 +289,6 @@
   --bg19: #66ffff;
   --bg20: #00d9e6;
 }
-
 /* ========================================
    🔄 RESET Y BASE STYLES
    ======================================== */
@@ -1796,7 +1795,33 @@ line-height:1.80;
 background:var(--mco);
 color:var(--txa);
 } 
-
+.hd_der{display:flex;align-items:center;gap:1.5vh}
+#wiTema{display:flex;align-items:center;gap:0.6vh;padding:0.5vh 0.8vw;background:rgba(255,255,255,0.1);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.2);border-radius:0.8vh;box-shadow:0 0.2vh 0.8vh rgba(0,0,0,0.1)}
+.tema{width:2.5vh;height:2.5vh;border-radius:50%;cursor:pointer;transition:all 0.3s ease;border:2px solid transparent;box-shadow:0 0.2vh 0.5vh rgba(0,0,0,0.2)}
+.tema::after{content:'';position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 30% 30%,rgba(255,255,255,0.4),transparent 60%);pointer-events:none}
+.tema:hover{transform:scale(1.1);border-color:rgba(255,255,255,0.4);box-shadow:0 0 0.8vh currentColor}
+.tema.mtha{transform:scale(1.15);border-color:#fff;box-shadow:0 0 1vh currentColor}
+.tema[data-ths*="Cielo"]{background:linear-gradient(135deg,#0EBEFF,#00a8e6)}
+.tema[data-ths*="Dulce"]{background:linear-gradient(135deg,#FF5C69,#ff8a94)}
+.tema[data-ths*="Paz"]{background:linear-gradient(135deg,#29C72E,#5ddb61)}
+.tema[data-ths*="Mora"]{background:linear-gradient(135deg,#7000FF,#9d4dff)}
+.tema[data-ths*="Futuro"]{background:linear-gradient(135deg,#21273B,#00f3ff)}
+.hd_nav{display:flex;gap:0.7vh;align-items:center;padding:0.5vh;background:rgba(255,255,255,0.1);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.2);border-radius:0.8vh;box-shadow:0 0.2vh 0.8vh rgba(0,0,0,0.1)}
+.nav_btn{display:inline-flex;align-items:center;gap:0.5vh;padding:0.8vh 1.2vw;background:rgba(255,255,255,0.08);border:1px solid transparent;border-radius:0.8vh;color:var(--tx);font-size:var(--fz_s2);font-weight:600;font-family:var(--ff_P);cursor:pointer;transition:all 0.3s ease;white-space:nowrap}
+.nav_btn i{font-size:var(--fz_m3);transition:transform 0.3s ease}
+.nav_btn:hover{background:rgba(255,255,255,0.15);border-color:var(--mco);transform:translateY(-0.2vh);box-shadow:0 0.4vh 1vh rgba(0,0,0,0.1)}
+.nav_btn:hover i{transform:scale(1.1)}
+.nav_btn.active{background:var(--mco);color:var(--txa);border-color:rgba(255,255,255,0.2);box-shadow:0 0.4vh 1.2vh rgba(0,0,0,0.15);font-weight:700}
+.nav_btn.active i{transform:scale(1.1)}
+.nav_btn:active{transform:scale(0.97)}
+.hr{display:none;opacity:0;transition:opacity 0.4s ease}
+.hr.active{display:block;opacity:1}
+@media (max-width:1024px){#wiTema{padding:0.5vh 0.7vw;gap:0.5vh}.tema{width:2.3vh;height:2.3vh}.hd_nav{gap:0.5vh;padding:0.4vh}.nav_btn{padding:0.7vh 1vw;font-size:var(--fz_s3)}.nav_btn span{display:none}.nav_btn{padding:0.7vh 1.2vw;justify-content:center}.nav_btn i{font-size:var(--fz_m4)}}
+@media (max-width:768px){.hd_der{flex-direction:column;gap:1.5vh;width:100%}#wiTema{width:100%;justify-content:center;padding:0.5vh 0.8vw}.tema{width:3vh;height:3vh}.hd_nav{width:100%;justify-content:space-around;gap:1vh}.nav_btn{flex:1;padding:1.2vh 2vw;justify-content:center}.nav_btn i{font-size:var(--fz_m3)}}
+@media (max-width:480px){#wiTema{gap:0.4vh}.tema{width:2.8vh;height:2.8vh}.hd_nav{gap:0.5vh}.nav_btn{padding:1vh 1.5vw}.nav_btn i{font-size:var(--fz_m2)}}
+:root[data-theme="Futuro"] #wiTema,:root[data-theme="Futuro"] .hd_nav{background:rgba(0,0,0,0.3);border-color:rgba(0,243,255,0.2)}
+:root[data-theme="Futuro"] .nav_btn{color:#fff}
+:root[data-theme="Futuro"] .nav_btn.active{background:linear-gradient(135deg,#00f3ff,#007980);color:#000}
 /* ========================================
    ✨ FIN DEL CSS - TOTAL: 5000+ LÍNEAS
    ======================================== */

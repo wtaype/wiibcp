@@ -1,11 +1,3 @@
-// import $ from 'jquery';
-
-/* ============================================
-   🎨 MIS HERRAMIENTAS WEB - MAIN.JS
-   Creado con ❤️ por @wilder.taype
-   Version: 2.0 Ultra | 2024
-   ============================================ */
-
 // ========== INICIALIZACIÓN ==========
 $(() => {
 if (typeof pdfjsLib !== 'undefined') {
@@ -27,18 +19,12 @@ const adrm=(s,c)=>$(s).addClass(c).siblings().removeClass(c),
 adtc=(s,c,t=3e3)=>{$(s).addClass(c);setTimeout(()=>$(s).removeClass(c),t)},
 adtx=(s,t)=>{const o=$(s).text();$(s).text(t).delay(1800).queue(q=>$(s).text(o).dequeue())},
 notif=(m,t='success',d=3e3)=>{const i={'success':'fa-check-circle','error':'fa-times-circle','warning':'fa-exclamation-triangle','info':'fa-info-circle'}[t]||'fa-bell';$('body').append(`<div class="toast toast_${t}"><i class="fas ${i}"></i><span>${m}</span></div>`);const n=$('.toast').last();setTimeout(()=>n.addClass('activo'),100);setTimeout(()=>n.removeClass('activo').delay(300).queue(()=>n.remove()),d)},
-copy=async t=>{try{await navigator.clipboard.writeText(t);notif('✅ Copiado al portapapeles','success');return true}catch(e){notif('❌ Error al copiar','error');return false}};
+copy=async t=>{try{await navigator.clipboard.writeText(t);notif('&#9989; Copiado al portapapeles','success');return true}catch(e){notif('&#10060; Error al copiar','error');return false}};
 
-// ========== SISTEMA DE TEMAS ==========
-const wiTema=(()=>{
-const tms=[['Cielo','#0EBEFF'],['Dulce','#FF5C69'],['Paz','#29C72E'],['Mora','#7000FF'],['Futuro','#21273B']],
-set=e=>{const[n,c]=$(e).data('tema').split('|');$('html').attr('data-theme',n);($('meta[name="theme-color"]')[0]||$('<meta name="theme-color">').appendTo('head')[0]).content=c;savels('wiTema',`${n}|${c}`,720);$('.mtha').removeClass('mtha');$(e).addClass('mtha')},
-ini=()=>{$('.hd_temas').html(tms.map(([n,c])=>`<div class="tema" data-tema="${n}|${c}"></div>`).join(''));const s=getls('wiTema'),el=$(`[data-tema="${s}"]`)[0]||$('.tema').first()[0];el&&set(el);$(document).on('click.tema','.tema',e=>set(e.currentTarget))};
-ini();return{set}})();
 
 // ========== HEADER DINÁMICO ==========
 $('.hd_izq').html(`<h1><i class="fas fa-toolbox"></i>Mis Herramientas Web</h1>`);
-$('.hd_moti').html(`<i class="fas fa-lightbulb"></i><span>¡Construyendo el futuro!</span>`);
+$('.hd_moti').html(`<i class="fas fa-lightbulb"></i><span>&#161;Construyendo el futuro!</span>`);
 
 // ========== HERRAMIENTA 1: TABLA PARSER (NIVEL PRO) ==========
 $('#hr1').html(`
@@ -193,7 +179,7 @@ $(document).on('click', '.btn_limpiar[data-target="tb_entrada"]', () => {
 
 $(document).on('click', '.btn_copiar[data-target="tb_resultado"]', async () => {
   const t = $('#tb_resultado table');
-  if (!t.length) return notif('⚠️ No hay tabla para copiar', 'warning');
+  if (!t.length) return notif('&#9888;&#65039; No hay tabla para copiar', 'warning');
 
   // construir TSV
   let tsv = '';
@@ -210,7 +196,7 @@ $(document).on('click', '.btn_copiar[data-target="tb_resultado"]', async () => {
   if (navigator && navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
     try {
       await navigator.clipboard.writeText(tsv);
-      return notif('✅ Tabla copiada - pega en Excel', 'success');
+      return notif('&#9989; Tabla copiada - pega en Excel', 'success');
     } catch (e) {
       // sigue al fallback
     }
@@ -226,9 +212,9 @@ $(document).on('click', '.btn_copiar[data-target="tb_resultado"]', async () => {
     temp[0].select();
     document.execCommand('copy');
     temp.remove();
-    notif('✅ Tabla copiada', 'success');
+    notif('&#9989; Tabla copiada', 'success');
   } catch (e) {
-    notif('❌ No se pudo copiar automáticamente. Selecciona y copia manualmente.', 'error');
+    notif('&#10060; No se pudo copiar automáticamente. Selecciona y copia manualmente.', 'error');
   }
 });
 
@@ -286,7 +272,7 @@ $('#hr2').html(`
 `);
 
 const processOCR = file => {
-  if (!file || !file.type.startsWith('image/')) return notif('⚠️ Archivo no válido','warning');
+  if (!file || !file.type.startsWith('image/')) return notif('&#9888;&#65039; Archivo no válido','warning');
 
   const url = URL.createObjectURL(file);
   const start = Date.now();
@@ -329,7 +315,7 @@ const processOCR = file => {
     $('#ocr_tiempo').text(`${secs.toFixed(1)}s`);
     $('#ocr_conf').text(`${avgConf.toFixed(1)}%`);
     $('.ocr_progress').removeClass('active');
-    notif('✅ Texto extraído correctamente','success');
+    notif('&#9989; Texto extraído correctamente','success');
 
     URL.revokeObjectURL(url);
   })
@@ -338,7 +324,7 @@ const processOCR = file => {
     $('#ocr_tiempo').text('--');
     $('#ocr_conf').text('--');
     $('.ocr_progress').removeClass('active');
-    notif('❌ Error al procesar imagen','error');
+    notif('&#10060; Error al procesar imagen','error');
     URL.revokeObjectURL(url);
   });
 };
@@ -376,20 +362,20 @@ $(document).on('paste', e => {
 // copiar texto OCR
 $(document).on('click','.btn_copiar[data-target="ocr_resultado"]', () => {
   const txt = $('#ocr_resultado').val();
-  txt ? copy(txt) : notif('⚠️ No hay texto para copiar','warning');
+  txt ? copy(txt) : notif('&#9888;&#65039; No hay texto para copiar','warning');
 });
 
 // descargar texto OCR
 $('#ocr_descargar').click(() => {
   const txt = $('#ocr_resultado').val();
-  if (!txt) return notif('⚠️ No hay texto para descargar','warning');
+  if (!txt) return notif('&#9888;&#65039; No hay texto para descargar','warning');
   const blob = new Blob([txt],{type:'text/plain'});
   const url = URL.createObjectURL(blob);
   const a = $('<a>').attr({href:url,download:`texto_${Date.now()}.txt`}).appendTo('body');
   a[0].click();
   a.remove();
   URL.revokeObjectURL(url);
-  notif('✅ Texto descargado','success');
+  notif('&#9989; Texto descargado','success');
 });
 
 // actualizar texto de idioma
@@ -402,7 +388,7 @@ $('#ocr_lang').on('change', function(){
   );
 });
 
-// ========== HERRAMIENTA 3: PDF → EXCEL (NIVEL PRO) ==========
+// ========== HERRAMIENTA 3: PDF &#8594; EXCEL (NIVEL PRO) ==========
 $('#hr3').html(`
 <div class="hr_hd">
   <div class="hr_tit"><i class="fas fa-file-excel"></i><h2>Conversor PDF a Excel</h2></div>
@@ -486,7 +472,7 @@ $('#pdf_seleccionar').click(()=>$('#pdf_file').click());
 $('#pdf_file').change(function(){
   const f=this.files[0];
   if(!f)return;
-  if(f.size>1e7)return notif('⚠️ Archivo muy grande (máx 10MB)','warning');
+  if(f.size>1e7)return notif('&#9888;&#65039; Archivo muy grande (máx 10MB)','warning');
   $('#pdf_info').addClass('active');
   $('.file_name').text(f.name);
   $('.file_size').text(`${(f.size/1024).toFixed(2)} KB`);
@@ -494,7 +480,7 @@ $('#pdf_file').change(function(){
   const r=new FileReader();
   r.onload=e=>{
     pdfData=new Uint8Array(e.target.result);
-    notif('✅ PDF cargado correctamente','success');
+    notif('&#9989; PDF cargado correctamente','success');
   };
   r.readAsArrayBuffer(f);
 });
@@ -527,7 +513,7 @@ $('#pdf_zona')
 
 // procesar PDF con detección de filas/columnas mejorada
 $('#pdf_procesar').click(async()=>{
-  if(!pdfData)return notif('⚠️ Selecciona un PDF primero','warning');
+  if(!pdfData)return notif('&#9888;&#65039; Selecciona un PDF primero','warning');
   $('.progress_status').text('Procesando PDF...');
   try{
     const pdf=await pdfjsLib.getDocument({data:pdfData}).promise;
@@ -593,22 +579,34 @@ $('#pdf_procesar').click(async()=>{
     $('#pdf_preview').addClass('active');
     $('.preview_tabs').html('<button class="tab_btn active" data-tab="hoja1">Hoja 1</button>');
     $('#pdf_descargar').prop('disabled',false);
-    $('.progress_status').text('✅ PDF procesado correctamente');
-    notif('✅ PDF convertido a tabla Excel','success');
+    $('.progress_status').text('&#9989; PDF procesado correctamente');
+    notif('&#9989; PDF convertido a tabla Excel','success');
   }catch(e){
-    notif(`❌ Error: ${e.message}`,'error');
-    $('.progress_status').text('❌ Error al procesar PDF');
+    notif(`&#10060; Error: ${e.message}`,'error');
+    $('.progress_status').text('&#10060; Error al procesar PDF');
   }
 });
 
 // descargar Excel
 $('#pdf_descargar').click(()=>{
-  if(!excelData)return notif('⚠️ Procesa un PDF primero','warning');
+  if(!excelData)return notif('&#9888;&#65039; Procesa un PDF primero','warning');
   const wb=XLSX.utils.book_new();
   const ws=XLSX.utils.aoa_to_sheet(excelData);
   XLSX.utils.book_append_sheet(wb,ws,'Hoja1');
   XLSX.writeFile(wb,`excel_${Date.now()}.xlsx`);
-  notif('✅ Excel descargado','success');
+  notif('&#9989; Excel descargado','success');
+});
+
+$(document).on('click', '.nav_btn', function() {
+  const targetId = $(this).data('hr');
+  
+  // Actualizar botones
+  $('.nav_btn').removeClass('active');
+  $(this).addClass('active');
+  
+  // Mostrar herramienta
+  $('.hr').removeClass('active');
+  $(`#${targetId}`).addClass('active');
 });
 
 // ========== TOASTS CSS ==========
@@ -626,6 +624,7 @@ $('head').append(`<style>
 .toast i{font-size:var(--fz_c5)}
 .vlx{text-align:right;font-weight:600;color:var(--mco)}
 </style>`);
+
 
 // ========== FIN INICIALIZACIÓN ==========
 console.log('🚀 Mis Herramientas Web v2.0 - Inicializado correctamente');
